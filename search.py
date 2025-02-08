@@ -92,7 +92,6 @@ def depthFirstSearch(problem):
     for statePortion in problem.getSuccessors(problem.getStartState()):
         print("\t" + str(statePortion))
     """
-    "*** YOUR CODE HERE ***"
     from util import Stack  # Using Stack for DFS
 
     stack = Stack()
@@ -119,8 +118,25 @@ def depthFirstSearch(problem):
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    from util import Queue  # Using Queue for BFS
+    queue = Queue()
+    visited = set()
+
+    # Push the start state with an empty action list
+    queue.push((problem.getStartState(), []))
+    while not queue.isEmpty():
+        state, actions = queue.pop()
+
+        if problem.isGoalState(state):
+            return actions
+
+        if state not in visited:
+            visited.add(state)
+
+            for successor, action, _ in problem.getSuccessors(state):
+                if successor not in visited:
+                    queue.push((successor, actions + [action]))
+    return []
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
